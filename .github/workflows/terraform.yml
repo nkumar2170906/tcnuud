@@ -32,7 +32,7 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ACCESS_OIDC_ROLE }}
           aws-region: ${{ vars.AWS_REGION }}
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -input=false
 
       - name: Terraform Plan
         run: terraform plan -input=false
