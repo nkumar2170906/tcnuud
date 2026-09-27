@@ -33,7 +33,7 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ACCESS_OIDC_ROLE }}
           aws-region: ${{ vars.AWS_REGION }}
       - name: Terraform Init
-        run: terraform init -input=false
+        run: terraform init
 
       - name: Terraform Plan
         run: terraform plan -input=false
@@ -60,7 +60,7 @@ jobs:
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Terraform Init
-        run: terraform init -input=false
+        run: terraform init
 
       - name: Terraform Apply
         run: terraform apply -auto-approve -input=false
