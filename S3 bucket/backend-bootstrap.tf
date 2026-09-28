@@ -1,6 +1,16 @@
 # This is a one-time setup file to create the S3 bucket and DynamoDB table
 # After running this once, you can delete this file or move it to a separate directory
 
+terraform {
+  backend "s3" {
+    bucket       = "tf-state-test1-stack-eu-west-2"
+    key          = "bootstrap/terraform.tfstate"
+    region       = "eu-west-2"
+    encrypt      = true
+    use_lockfile = true
+  }
+}
+
 provider "aws" {
   region = "eu-west-2"
 }
