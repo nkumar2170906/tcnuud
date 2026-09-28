@@ -7,7 +7,7 @@ provider "aws" {
 
 # S3 bucket to store Terraform state files
 resource "aws_s3_bucket" "state" {
-  bucket = "tf-state-test-stack-eu-west-2"
+  bucket = "tf-state-test1-stack-eu-west-2"
 
   # Prevent accidental deletion of the state bucket
   lifecycle {
@@ -46,7 +46,7 @@ resource "aws_s3_bucket_public_access_block" "state" {
 
 # DynamoDB table for state locking to prevent concurrent modifications
 resource "aws_dynamodb_table" "lock" {
-  name         = "tf-state-locks-prod-stack"
+  name         = "tf-state-locks-prod-stack_test"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
