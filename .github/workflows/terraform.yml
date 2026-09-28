@@ -19,6 +19,7 @@ jobs:
       source_sha: ${{ steps.revision.outputs.source_sha }}
       source_tree: ${{ steps.revision.outputs.source_tree }}
       base_sha: ${{ steps.revision.outputs.base_sha }}
+      has_changes: ${{ steps.revision.outputs.has_changes }}
 
     steps:
       - name: Checkout Repository
@@ -37,6 +38,13 @@ jobs:
           if ! git merge-base --is-ancestor "$base_sha" "$source_sha"; then
             echo "The test branch must include the current main branch before promotion." >&2
             exit 1
+          fi
+          commit_count="$(git rev-list --count "$base_sha..$source_sha")"
+          if [[ "$commit_count" -eq 0 ]]; then
+            echo "No commits to promote; test already matches main."
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
           fi
           echo "source_sha=$source_sha" >> "$GITHUB_OUTPUT"
           echo "source_tree=$source_tree" >> "$GITHUB_OUTPUT"
@@ -76,6 +84,7 @@ jobs:
   prepare_pull_request:
     name: "2. Prepare PR to main"
     needs: terraform_plan
+    if: needs.terraform_plan.outputs.has_changes == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
