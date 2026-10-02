@@ -6,7 +6,7 @@ terraform {
     bucket       = "tf-state-test1-stack-eu-west-2"
     key          = "bootstrap/terraform.tfstate"
     region       = "eu-west-2"
-    encrypt      = false
+    encrypt      = true
     use_lockfile = true
   }
 }
@@ -30,7 +30,7 @@ resource "aws_s3_bucket_versioning" "state" {
   bucket = aws_s3_bucket.state.id
 
   versioning_configuration {
-    status = "Enabled"
+    status = "Disabled"
   }
 }
 
