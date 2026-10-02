@@ -6,7 +6,7 @@ terraform {
     bucket       = "tf-state-test1-stack-eu-west-2"
     key          = "bootstrap/terraform.tfstate"
     region       = "eu-west-2"
-    encrypt      = false
+    encrypt      = true
     use_lockfile = true
   }
 }
